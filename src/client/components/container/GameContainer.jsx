@@ -27,6 +27,10 @@ class GameContainer extends Component {
   }
 
   handleClick(e, position) {
+    if (this.state.isWinner) {
+      return;
+    }
+
     const updatedBoard = [...this.state.board];
     updatedBoard[position] = this.state.player;
     const currentPlayer = this.state.player;
@@ -41,6 +45,8 @@ class GameContainer extends Component {
           isWinner: true,
           goodMoves: winningMoves,
         });
+
+        clearInterval(this.startTime);
       }
     });
   }

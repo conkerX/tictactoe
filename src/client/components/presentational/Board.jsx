@@ -1,7 +1,7 @@
 import React from 'react';
 import Block from './Block.jsx';
 
-const Board = ({ handleClick, board, isWinner, goodMoves }) => {
+const Board = ({ goodMoves, isWinner, board, handleClick }) => {
   return (
     <table>
       <tbody>
