@@ -8,6 +8,7 @@ class GameContainer extends Component {
     super(props);
     this.state = {
       isWinner: false,
+      goodMoves: [],
       board: Array(9).fill(null),
       player: 'X',
       time: '00:00',
@@ -28,10 +29,19 @@ class GameContainer extends Component {
   handleClick(e, position) {
     const updatedBoard = [...this.state.board];
     updatedBoard[position] = this.state.player;
+    const currentPlayer = this.state.player;
 
     this.setState({
       board: updatedBoard,
       player: (this.state.player === 'X' ? 'O' : 'X'),
+    }, () => {
+      const winningMoves = checkForWin(this.state.board, currentPlayer);
+      if (winningMoves) {
+        this.setState({
+          isWinner: true,
+          goodMoves: winningMoves,
+        });
+      }
     });
   }
 
@@ -70,6 +80,8 @@ class GameContainer extends Component {
         <Board
           handleClick={this.handleClick}
           board={this.state.board}
+          isWinner={this.state.isWinner}
+          goodMoves={this.state.goodMoves}
         />
       </div>
     );
